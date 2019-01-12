@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by LaunchCode
@@ -47,7 +47,7 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String processAddCheeseForm(@ModelAttribute  @Valid Cheese newCheese,
+    public String processAddCheeseForm(@ModelAttribute @Valid Cheese newCheese,
                                        Errors errors, @RequestParam int categoryId, Model model) {
 
         if (errors.hasErrors()) {
@@ -78,4 +78,22 @@ public class CheeseController {
         return "redirect:";
     }
 
+    @RequestMapping(value = "category", method = RequestMethod.GET)
+    public String category(Model model, @RequestParam int id) {
+        List<Cheese> cheesesInCategory = new ArrayList<>();
+        if (cheeseDao.count() != 0) {
+            for (Cheese cheese : cheeseDao.findAll()) {
+                if (cheese.getCategory() == categoryDao.findOne(id)) {
+                    cheesesInCategory.add(cheese);
+                }
+            }
+
+            model.addAttribute("cheeses", cheesesInCategory);
+            model.addAttribute("title", categoryDao.findOne(id).getName());
+
+        }
+
+        return "cheese/index";
+
+    }
 }
