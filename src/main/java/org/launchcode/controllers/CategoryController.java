@@ -20,6 +20,7 @@ public class CategoryController {
     @Autowired
     private CategoryDao categoryDao;
 
+
     @RequestMapping("")
     public String index(Model model) {
             model.addAttribute("title", "Categories");
