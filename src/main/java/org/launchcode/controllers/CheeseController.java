@@ -80,20 +80,11 @@ public class CheeseController {
 
     @RequestMapping(value = "category", method = RequestMethod.GET)
     public String category(Model model, @RequestParam int id) {
-        List<Cheese> cheesesInCategory = new ArrayList<>();
-        if (cheeseDao.count() != 0) {
-            for (Cheese cheese : cheeseDao.findAll()) {
-                if (cheese.getCategory() == categoryDao.findOne(id)) {
-                    cheesesInCategory.add(cheese);
-                }
-            }
-
-            model.addAttribute("cheeses", cheesesInCategory);
-            model.addAttribute("title", categoryDao.findOne(id).getName());
-
-        }
-
+        Category cat = categoryDao.findOne(id);
+        List<Cheese> cheeses = cat.getCheeses();
+        model.addAttribute("cheeses", cheeses);
+        model.addAttribute("title", "Cheeses in Category: " + cat.getName());
         return "cheese/index";
-
     }
 }
+
