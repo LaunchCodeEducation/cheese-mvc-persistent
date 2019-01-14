@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Created by LaunchCode
@@ -84,7 +85,7 @@ public class CheeseController {
         List<Cheese> cheeses = cat.getCheeses();
         model.addAttribute("cheeses", cheeses);
         model.addAttribute("title", "Cheeses in Category: " + cat.getName());
-        return "cheese/index";
+        return "cheese/category-view";
     }
 }
 

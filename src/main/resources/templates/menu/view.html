@@ -16,7 +16,7 @@
             <tr th:each="cheese : ${menu.cheeses}">
                 <td th:text="${cheese.name}"></td>
                 <td th:text="${cheese.description}"></td>
-                <td><a th:href="@{/cheese/category(id=${cheese.category.id})}" th:text="${cheese.category.name}"></a></td>
+                <td th:text="${cheese.category.name}"></td>
             </tr>
 
         </table>
