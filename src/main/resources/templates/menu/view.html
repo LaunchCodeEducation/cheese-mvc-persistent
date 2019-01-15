@@ -20,6 +20,7 @@
             </tr>
 
         </table>
-        <p>Add <a th:href="@{/menu/add-item(id=${menu.id})}">cheeses</a></p>
+        <a th:href="@{/menu/add-item(id=${menu.id})}"> Add </a> |
+        <a th:href="@{/menu/remove(id=${menu.id})}"> Remove </a>
     </body>
 </html>

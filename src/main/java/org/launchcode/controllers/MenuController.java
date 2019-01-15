@@ -84,6 +84,28 @@ public class MenuController {
             }
         }
 
+    @GetMapping(value = "remove")
+    public String displayRemoveCheeseFromMenuForm(Model model, @RequestParam int id) {
+        Menu menu = menuDao.findOne(id);
+        model.addAttribute("cheeses", menu.getCheeses());
+        model.addAttribute("title", "Remove Cheeses from " + menu.getName());
+        return "menu/remove";
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
+    public String processRemoveCheeseFromMenuForm(@RequestParam int id, @RequestParam int[] cheeseIds) {
+
+        Menu menu = menuDao.findOne(id);
+
+        for (int cheeseId : cheeseIds) {
+            Cheese theCheese = cheeseDao.findOne(cheeseId);
+            menu.removeItem(theCheese);
+        }
+
+        menuDao.save(menu);
+        return "redirect:view?id=" + menu.getId();
+    }
+
     }
 
 
