@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<h1 th:text="${title}">Default Title</h1>
+
+<h1 th:text="'Edit Cheese \'' + ${cheese.name} + '\' (id=' + ${cheese.id} + ')'"></h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<form method="post" style="max-width:600px;" action="/cheese/edit">
+    <div class="form-group">
+        <label th:for="cheeseName">Cheese Name</label>
+        <input type="text" name="cheeseName" class="form-control" th:value="${cheese.name}"/>
+        <span th:text="${error}"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="cheeseDescription">Cheese Description</label>
+        <input type="text" name="cheeseDescription" class="form-control" th:value="${cheese.description}"/>
+    </div>
+    <div class="form-group">
+        <label th:for="categoryId">Category</label>
+        <select name="categoryId">
+            <option th:each="category: ${categories}"
+                    th:text="${category.name}"
+                    th:value="${category.id}"
+                    th:selected="(${category.id} == ${cheese.category.id})"></option>
+        </select>
+    </div>
+    <input type="hidden" th:value="${cheese.id}" name="cheeseId" />
+    <input type="submit" value="Update" />
+</form>
+
+</body>
+</html>
